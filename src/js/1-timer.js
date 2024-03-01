@@ -1,10 +1,15 @@
-'use strict'
+'use strict';
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-let countdownTimer; 
+const startButton = document.querySelector("[data-start]");
+const timerContainer = document.querySelector(".timer"); 
+let countdownTimer;
+
+
+timerContainer.style.display = "block";
 
 const datePicker = flatpickr("#datetime-picker", {
   enableTime: true,
@@ -18,18 +23,17 @@ const datePicker = flatpickr("#datetime-picker", {
       iziToast.error({
         title: "Error",
         message: "Please choose a date in the future",
-        position: "topRight" 
+        position: "topRight"
       });
-      document.querySelector("[data-start]").disabled = true;
+      startButton.disabled = true;
     } else {
-      document.querySelector("[data-start]").disabled = false;
+      startButton.disabled = false;
     }
-    clearInterval(countdownTimer); 
-    document.querySelector(".timer").style.display = "none"; 
+    clearInterval(countdownTimer);
   }
 });
 
-document.querySelector("[data-start]").addEventListener("click", () => {
+startButton.addEventListener("click", () => {
   const selectedDate = datePicker.selectedDates[0];
   const currentDate = new Date();
   const timeDiff = selectedDate - currentDate;
@@ -39,12 +43,10 @@ document.querySelector("[data-start]").addEventListener("click", () => {
     updateTimer(timeLeft);
     if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
       clearInterval(countdownTimer);
-      document.querySelector(".timer").style.display = "none";
     }
   }, 1000);
 
-  document.querySelector("[data-start]").disabled = true;
-  document.querySelector(".timer").style.display = "block";
+  startButton.disabled = true;
 });
 
 function convertMs(ms) {
