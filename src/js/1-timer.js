@@ -9,7 +9,7 @@ let countdownTimer;
 
 timerContainer.style.display = "block";
 
-const startButton = document.querySelector("[data-start]"); // Кешуємо кнопку "Start"
+const startButton = document.querySelector("[data-start]"); 
 
 const datePicker = flatpickr("#datetime-picker", {
   enableTime: true,
