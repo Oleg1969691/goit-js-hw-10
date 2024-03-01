@@ -4,11 +4,12 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-const timerContainer = document.querySelector(".timer"); 
+const timerContainer = document.querySelector(".timer");
 let countdownTimer;
 
-
 timerContainer.style.display = "block";
+
+const startButton = document.querySelector("[data-start]"); // Кешуємо кнопку "Start"
 
 const datePicker = flatpickr("#datetime-picker", {
   enableTime: true,
@@ -24,15 +25,15 @@ const datePicker = flatpickr("#datetime-picker", {
         message: "Please choose a date in the future",
         position: "topRight"
       });
-      document.querySelector("[data-start]").disabled = true;
+      startButton.disabled = true; 
     } else {
-      document.querySelector("[data-start]").disabled = false;
+      startButton.disabled = false; 
     }
     clearInterval(countdownTimer);
   }
 });
 
-document.querySelector("[data-start]").addEventListener("click", () => {
+startButton.addEventListener("click", () => { 
   const selectedDate = datePicker.selectedDates[0];
   const currentDate = new Date();
   const timeDiff = selectedDate - currentDate;
@@ -45,7 +46,7 @@ document.querySelector("[data-start]").addEventListener("click", () => {
     }
   }, 1000);
 
-  document.querySelector("[data-start]").disabled = true;
+  startButton.disabled = true; 
 });
 
 function convertMs(ms) {
